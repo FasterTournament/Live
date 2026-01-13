@@ -8,113 +8,142 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+            background: #1a1a1a; 
+            color: white;
+            font-family: Arial, sans-serif;
         }
         .card { 
-            background: rgba(255, 255, 255, 0.95);
+            background: #2d2d2d; 
             border: none;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         .btn-success { 
-            background: #10b981;
+            background: #10b981; 
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 5px;
         }
         .btn-danger { 
-            background: #ef4444;
+            background: #ef4444; 
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 5px;
         }
         .btn-secondary { 
-            background: #6b7280;
+            background: #6b7280; 
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 5px;
         }
         .status-box { 
-            background: #f3f4f6;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 5px solid #10b981;
+            background: #374151; 
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 20px;
+            border-left: 4px solid #3b82f6;
         }
         .modal-content {
-            border-radius: 20px;
-            border: none;
+            background: #2d2d2d;
+            color: white;
+            border-radius: 10px;
         }
-        .audio-container {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 20px 0;
+        .modal-header {
+            border-bottom: 1px solid #4b5563;
+        }
+        .modal-title {
+            color: white;
         }
         #remoteAudio {
             width: 100%;
-            border-radius: 10px;
-            background: #f1f5f9;
+            background: #1f2937;
+            border-radius: 5px;
+            padding: 5px;
         }
-        .user-id {
-            background: #dbeafe;
-            color: #1e40af;
-            padding: 8px 15px;
-            border-radius: 50px;
+        .text-muted {
+            color: #9ca3af !important;
+        }
+        .alert {
+            border-radius: 8px;
+            border: none;
+        }
+        .alert-success {
+            background-color: #064e3b;
+            color: #a7f3d0;
+        }
+        .alert-info {
+            background-color: #1e3a8a;
+            color: #93c5fd;
+        }
+        .alert-danger {
+            background-color: #7f1d1d;
+            color: #fca5a5;
+        }
+        .form-control {
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            color: white;
+        }
+        .form-control:focus {
+            background-color: #4b5563;
+            border-color: #3b82f6;
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+        .input-group-text {
+            background-color: #1f2937;
+            border: 1px solid #4b5563;
+            color: #9ca3af;
+        }
+        h3 {
+            color: #3b82f6;
             font-weight: bold;
-            display: inline-block;
-            margin: 5px 0;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .room-id {
-            background: #fef3c7;
-            color: #d97706;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-weight: bold;
-            display: inline-block;
-            margin: 5px 0;
+        .small {
+            font-size: 0.875rem;
         }
-        .status-indicator {
+        .container {
+            max-width: 800px;
+        }
+        .fa-spin {
+            animation: fa-spin 2s infinite linear;
+        }
+        @keyframes fa-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .connection-status {
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             margin-right: 8px;
         }
-        .connected { background-color: #10b981; }
-        .disconnected { background-color: #ef4444; }
-        .waiting { background-color: #f59e0b; }
-        h3 {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
+        .status-connected { background-color: #10b981; }
+        .status-disconnected { background-color: #ef4444; }
+        .status-waiting { background-color: #f59e0b; }
     </style>
 </head>
 <body>
     <!-- Permission Modal -->
-    <div id="permissionModal" class="modal show d-block" tabindex="-1" style="background: rgba(0,0,0,0.8);">
+    <div id="permissionModal" class="modal show d-block" tabindex="-1" style="background: rgba(0,0,0,0.85);">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title text-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title">
                         <i class="fas fa-microphone me-2"></i>Microphone Access Required
                     </h5>
                 </div>
-                <div class="modal-body text-center py-4">
-                    <div class="mb-4">
-                        <i class="fas fa-microphone-alt fa-4x text-primary mb-3"></i>
-                        <p class="text-muted">Please allow microphone access to use voice chat features.</p>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-microphone-alt fa-3x text-primary mb-3"></i>
+                        <p class="mb-3">Please allow microphone access to use voice chat features.</p>
                     </div>
-                    <div id="micStatus" class="alert alert-info">
-                        <i class="fas fa-spinner fa-spin me-2"></i>Waiting for microphone permission...
+                    <div id="micStatus" class="alert alert-info mb-0">
+                        <i class="fas fa-spinner fa-spin me-2"></i>
+                        Waiting for microphone permission...
                     </div>
                 </div>
             </div>
@@ -122,124 +151,106 @@
     </div>
 
     <!-- Main App (Initially Hidden) -->
-    <div id="mainApp" style="display: none;">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6">
-                    <div class="card p-4 p-md-5">
-                        <!-- Header -->
-                        <div class="text-center mb-4">
-                            <h3><i class="fas fa-phone-alt me-2"></i>Voice Chat App</h3>
-                            <p class="text-muted">Real-time voice communication using Firebase</p>
-                        </div>
+    <div id="mainApp" class="container py-5" style="display: none;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-4">
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <h3><i class="fas fa-phone-alt me-2"></i>Voice Chat App</h3>
+                        <p class="text-muted">Real-time voice communication using Firebase</p>
+                    </div>
 
-                        <!-- User & Room Info -->
-                        <div class="status-box">
-                            <h5><i class="fas fa-info-circle me-2"></i>Connection Info</h5>
-                            <div class="row mt-3">
-                                <div class="col-md-6 mb-3">
-                                    <small class="text-muted d-block mb-1">Your ID:</small>
-                                    <div id="myIdDisplay" class="user-id">Loading...</div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <small class="text-muted d-block mb-1">Room ID:</small>
-                                    <div id="roomIdDisplay" class="room-id">Not joined</div>
+                    <!-- Connection Info -->
+                    <div class="status-box">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="mb-2">
+                                    <small class="text-muted">Your ID:</small>
+                                    <div id="myIdDisplay" class="fw-bold">Loading...</div>
                                 </div>
                             </div>
-                            <div class="mt-3">
-                                <small class="text-muted d-block mb-1">Status:</small>
-                                <div id="callStatus" class="d-flex align-items-center">
-                                    <span class="status-indicator disconnected"></span>
-                                    <span>Disconnected</span>
+                            <div class="col-md-6 mb-3">
+                                <div class="mb-2">
+                                    <small class="text-muted">Room ID:</small>
+                                    <div id="roomIdDisplay" class="fw-bold">Not joined</div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Audio Controls -->
-                        <div class="audio-container">
-                            <h6 class="mb-3"><i class="fas fa-headphones me-2"></i>Remote Audio</h6>
-                            <audio id="remoteAudio" controls class="w-100" style="outline: none;"></audio>
-                            <div class="text-center mt-2">
-                                <small class="text-muted">
-                                    <i class="fas fa-volume-up me-1"></i>
-                                    Adjust volume using the slider above
-                                </small>
+                        <div class="mb-2">
+                            <small class="text-muted">Status:</small>
+                            <div id="callStatus" class="d-flex align-items-center mt-1">
+                                <span class="connection-status status-disconnected"></span>
+                                <span>Disconnected</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Controls -->
-                        <div class="text-center mt-4">
-                            <div class="btn-group btn-group-lg" role="group">
-                                <button id="toggleMic" class="btn btn-success">
-                                    <i class="fas fa-microphone"></i> <span id="micText">Mute</span>
-                                </button>
-                                <button id="endCall" class="btn btn-danger">
-                                    <i class="fas fa-phone-slash"></i> End Call
-                                </button>
-                                <button id="joinRoomBtn" class="btn btn-primary">
-                                    <i class="fas fa-door-open"></i> Join Room
-                                </button>
-                            </div>
+                    <!-- Audio Player -->
+                    <div class="mb-4">
+                        <h6 class="mb-2"><i class="fas fa-headphones me-2"></i>Remote Audio</h6>
+                        <audio id="remoteAudio" controls class="w-100"></audio>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="d-flex justify-content-center gap-3 mb-4">
+                        <button id="toggleMic" class="btn btn-success">
+                            <i class="fas fa-microphone"></i> <span id="micText">Mute</span>
+                        </button>
+                        <button id="endCall" class="btn btn-danger">
+                            <i class="fas fa-phone-slash"></i> End Call
+                        </button>
+                        <button id="joinRoomBtn" class="btn btn-primary">
+                            <i class="fas fa-door-open"></i> Join Room
+                        </button>
+                    </div>
+
+                    <!-- Room ID Input -->
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <input type="text" id="roomIdInput" class="form-control" 
+                                   placeholder="Enter Room ID to join">
+                            <button id="copyRoomBtn" class="btn btn-outline-primary">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
                         </div>
+                        <small class="text-muted mt-2">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Share this Room ID with your friend to connect
+                        </small>
+                    </div>
 
-                        <!-- Instructions -->
-                        <div class="mt-5 pt-4 border-top">
-                            <h5><i class="fas fa-graduation-cap me-2"></i>How to Use</h5>
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
-                                    <div class="text-center p-3 rounded bg-light">
-                                        <div class="mb-2">
-                                            <i class="fas fa-keyboard fa-2x text-primary"></i>
-                                        </div>
-                                        <h6>Step 1</h6>
-                                        <p class="small mb-0">Allow microphone access when prompted</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="text-center p-3 rounded bg-light">
-                                        <div class="mb-2">
-                                            <i class="fas fa-users fa-2x text-primary"></i>
-                                        </div>
-                                        <h6>Step 2</h6>
-                                        <p class="small mb-0">Share same Room ID with your friend</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="text-center p-3 rounded bg-light">
-                                        <div class="mb-2">
-                                            <i class="fas fa-comments fa-2x text-primary"></i>
-                                        </div>
-                                        <h6>Step 3</h6>
-                                        <p class="small mb-0">Start speaking! Mute/Unmute as needed</p>
-                                    </div>
+                    <!-- Instructions -->
+                    <div class="mt-4 pt-4 border-top border-secondary">
+                        <h5><i class="fas fa-graduation-cap me-2"></i>How to Use</h5>
+                        <div class="row mt-3">
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 rounded bg-dark">
+                                    <h6 class="text-primary">Step 1</h6>
+                                    <p class="small mb-0">Allow microphone access when prompted</p>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Room Sharing -->
-                        <div class="mt-4">
-                            <div class="input-group">
-                                <input type="text" id="roomIdInput" class="form-control" 
-                                       placeholder="Enter Room ID to join" 
-                                       style="border-radius: 50px 0 0 50px;">
-                                <button id="copyRoomBtn" class="btn btn-outline-primary" 
-                                        style="border-radius: 0 50px 50px 0;">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 rounded bg-dark">
+                                    <h6 class="text-primary">Step 2</h6>
+                                    <p class="small mb-0">Share same Room ID with your friend</p>
+                                </div>
                             </div>
-                            <small class="text-muted mt-2 d-block">
-                                <i class="fas fa-lightbulb me-1"></i>
-                                Share this Room ID with your friend to connect
-                            </small>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 rounded bg-dark">
+                                    <h6 class="text-primary">Step 3</h6>
+                                    <p class="small mb-0">Start speaking! Mute/Unmute as needed</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Footer -->
-                    <div class="text-center mt-4 text-white">
-                        <small>
+                    <div class="text-center mt-4 text-muted small">
+                        <p class="mb-0">
                             Powered by <i class="fas fa-fire text-danger"></i> Firebase & 
                             <i class="fab fa-webrtc text-info"></i> WebRTC
-                        </small>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -283,8 +294,7 @@
                 { urls: 'stun:stun.l.google.com:19302' },
                 { urls: 'stun:stun1.l.google.com:19302' },
                 { urls: 'stun:stun2.l.google.com:19302' },
-                { urls: 'stun:stun3.l.google.com:19302' },
-                { urls: 'stun:stun4.l.google.com:19302' }
+                { urls: 'stun:stun3.l.google.com:19302' }
             ]
         };
 
@@ -298,15 +308,14 @@
                     audio: {
                         echoCancellation: true,
                         noiseSuppression: true,
-                        autoGainControl: true,
-                        channelCount: 1
+                        autoGainControl: true
                     },
                     video: false
                 });
                 
                 // Update status
                 micStatusDiv.innerHTML = `
-                    <div class="alert alert-success">
+                    <div class="alert alert-success mb-0">
                         <i class="fas fa-check-circle me-2"></i>
                         <strong>Microphone Ready!</strong> Click outside to continue.
                     </div>
@@ -319,9 +328,7 @@
                 
                 // Generate User ID
                 myId = "user_" + Math.random().toString(36).substr(2, 9);
-                document.getElementById('myIdDisplay').innerHTML = `
-                    <i class="fas fa-user me-1"></i>${myId}
-                `;
+                document.getElementById('myIdDisplay').textContent = myId;
                 
                 // Hide modal after 1 second
                 setTimeout(() => {
@@ -333,47 +340,54 @@
             } catch (err) {
                 console.error("Microphone Error:", err);
                 micStatusDiv.innerHTML = `
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger mb-0">
                         <i class="fas fa-times-circle me-2"></i>
                         <strong>Permission Denied!</strong> Please refresh and allow microphone access.
                     </div>
                 `;
-                alert("Microphone permission required. Please check browser settings.");
+                
+                // Auto hide modal after 3 seconds even if error
+                setTimeout(() => {
+                    document.getElementById('permissionModal').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    updateCallStatus("Microphone not available", "disconnected");
+                }, 3000);
             }
         }
 
         // ==================== Update Call Status ====================
         function updateCallStatus(status, type = "waiting") {
             const callStatusDiv = document.getElementById('callStatus');
-            let indicatorClass = "";
+            const statusIndicator = callStatusDiv.querySelector('.connection-status');
             
+            // Update status text
+            callStatusDiv.querySelector('span:last-child').textContent = status;
+            
+            // Update indicator color
+            statusIndicator.className = 'connection-status';
             switch(type) {
                 case "connected":
-                    indicatorClass = "connected";
+                    statusIndicator.classList.add('status-connected');
                     break;
                 case "disconnected":
-                    indicatorClass = "disconnected";
+                    statusIndicator.classList.add('status-disconnected');
                     break;
                 case "waiting":
-                    indicatorClass = "waiting";
+                    statusIndicator.classList.add('status-waiting');
                     break;
             }
-            
-            callStatusDiv.innerHTML = `
-                <span class="status-indicator ${indicatorClass}"></span>
-                <span>${status}</span>
-            `;
         }
 
         // ==================== Join Room ====================
         function joinRoom() {
-            roomId = prompt("Enter Room ID to join\n(or leave empty to create new room):", "");
+            const defaultRoomId = "room_" + Math.random().toString(36).substr(2, 8);
+            roomId = prompt("Enter Room ID to join:\n(or leave empty to create new room)", defaultRoomId);
             
             if (roomId === null) return; // User cancelled
             
             if (!roomId.trim()) {
                 // Create new room
-                roomId = "room_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5);
+                roomId = defaultRoomId;
                 createRoom();
             } else {
                 // Join existing room
@@ -381,15 +395,14 @@
             }
             
             // Update UI
-            document.getElementById('roomIdDisplay').innerHTML = `
-                <i class="fas fa-door-closed me-1"></i>${roomId}
-            `;
+            document.getElementById('roomIdDisplay').textContent = roomId;
             document.getElementById('roomIdInput').value = roomId;
         }
 
         // ==================== Create New Room ====================
         function createRoom() {
             isCaller = true;
+            updateCallStatus("Creating room...", "waiting");
             
             db.collection('voiceRooms').doc(roomId).set({
                 creatorId: myId,
@@ -401,6 +414,7 @@
                 listenForJoiners();
             }).catch(error => {
                 console.error("Error creating room:", error);
+                updateCallStatus("Failed to create room", "disconnected");
                 alert("Failed to create room. Please try again.");
             });
         }
@@ -408,6 +422,8 @@
         // ==================== Join Existing Room ====================
         function joinExistingRoom(roomId) {
             const roomRef = db.collection('voiceRooms').doc(roomId);
+            
+            updateCallStatus("Joining room...", "waiting");
             
             roomRef.get().then(doc => {
                 if (!doc.exists) {
@@ -433,6 +449,7 @@
                 
             }).catch(error => {
                 console.error("Error joining room:", error);
+                updateCallStatus("Failed to join room", "disconnected");
                 alert("Failed to join room. Please check Room ID.");
             });
         }
@@ -481,7 +498,8 @@
                 console.log("Connection state:", peerConnection.connectionState);
                 if (peerConnection.connectionState === 'connected') {
                     updateCallStatus("Connected ✓", "connected");
-                } else if (peerConnection.connectionState === 'disconnected') {
+                } else if (peerConnection.connectionState === 'disconnected' || 
+                          peerConnection.connectionState === 'failed') {
                     updateCallStatus("Disconnected", "disconnected");
                 }
             };
@@ -515,6 +533,7 @@
                 })
                 .catch(error => {
                     console.error("Error creating offer:", error);
+                    updateCallStatus("Failed to create offer", "disconnected");
                 });
         }
 
@@ -660,9 +679,7 @@
             
             // Reset UI
             updateCallStatus("Disconnected", "disconnected");
-            document.getElementById('roomIdDisplay').innerHTML = `
-                <i class="fas fa-door-closed me-1"></i>Not joined
-            `;
+            document.getElementById('roomIdDisplay').textContent = "Not joined";
             document.getElementById('roomIdInput').value = "";
             
             alert("Call ended successfully!");
@@ -677,7 +694,7 @@
                 
                 // Show temporary feedback
                 const originalText = roomIdInput.value;
-                roomIdInput.value = "Copied to clipboard!";
+                roomIdInput.value = "✓ Copied!";
                 setTimeout(() => {
                     roomIdInput.value = originalText;
                 }, 1500);
@@ -708,12 +725,14 @@
                 if (e.target === this) {
                     this.style.display = 'none';
                     document.getElementById('mainApp').style.display = 'block';
+                    updateCallStatus("Ready to connect", "disconnected");
                 }
             });
             
             console.log("🎉 Voice Chat App initialized successfully!");
             console.log("🔑 Firebase Project: top-up-4db01");
+            console.log("📱 User ID:", myId);
         });
     </script>
 </body>
-                                        </html>
+</html>
